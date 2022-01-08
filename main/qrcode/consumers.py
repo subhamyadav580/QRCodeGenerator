@@ -2,6 +2,7 @@ from django.urls.conf import path
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 import json
+import qrcode
 
 class TestConsumer(WebsocketConsumer):
 
@@ -24,3 +25,7 @@ class TestConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         # Called when the socket closes
         pass
+
+    def generate_qr_code(self, text):
+        img = qrcode.make(f'{text}')
+        img.save("some_file.png")
